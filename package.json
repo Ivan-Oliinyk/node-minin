@@ -1,0 +1,17 @@
+{
+  "name": "minin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run-index": "nodemon index.js",
+    "run-user": "nodemon src/user.js",
+    "run-path": "nodemon src/refs/path_ref.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
