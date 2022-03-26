@@ -1,12 +1,56 @@
 const http = require("http");
+const path = require("path");
+const fs = require("fs");
 
 const server = http.createServer(function (req, res) {
-  console.log(req.url);
+  if (req.method === "GET") {
+    res.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8",
+    });
 
-  res.write("<h1>Hello !!!!<h1>");
-  res.write("<h2>Hello !!!!<h2>");
-  res.write("<h3>Hello !!!!<h3>");
-  res.end();
+    if (req.url === "/") {
+      fs.readFile(
+        path.join(__dirname, "src", "views", "index.html"),
+        "utf-8",
+        (err, content) => {
+          if (err) {
+            throw err;
+          }
+
+          res.end(content);
+        }
+      );
+    } else if (req.url === "/about") {
+      fs.readFile(
+        path.join(__dirname, "src", "views", "about.html"),
+        "utf-8",
+        (err, content) => {
+          if (err) {
+            throw err;
+          }
+
+          res.end(content);
+        }
+      );
+    }
+  } else if (req.method === "POST") {
+    const body = [];
+    res.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8",
+    });
+
+    req.on("data", (data) => {
+      body.push(Buffer.from(data).toString().split("=")[1]);
+    });
+
+    req.on("end", () => {
+      console.log(body.join());
+
+      res.end(`
+        <h1>Your message is ${body.join(", ")} !</h1>
+      `);
+    });
+  }
 });
 const PORT = 3000;
 
