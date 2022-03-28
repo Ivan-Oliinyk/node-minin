@@ -32,6 +32,19 @@ const server = http.createServer(function (req, res) {
           res.end(content);
         }
       );
+    } else if (req.url === "/api/users") {
+      res.writeHead(200, {
+        "Content-Type": "text/json",
+      });
+
+      const users = [
+        { name: "Ivan", age: 30 },
+        { name: "Poly", age: 32 },
+        { name: "Doly", age: 40 },
+        { name: "Klarck", age: 20 },
+      ];
+
+      res.end(JSON.stringify(users));
     }
   } else if (req.method === "POST") {
     const body = [];
